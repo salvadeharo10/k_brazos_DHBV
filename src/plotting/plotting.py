@@ -88,33 +88,47 @@ def plot_optimal_selections(steps: int, optimal_selections: np.ndarray, algorith
     plt.show()
 
 
-def plot_arm_statistics(arm_stats: Dict[str, Dict[str, np.ndarray]], algorithms: List[Algorithm]):
+def plot_arm_statistics(arm_data, algorithms):
     """
-    Genera gráficos separados de Selección de Arms: Ganancias vs Pérdidas para cada algoritmo.
-    :param arm_stats: Diccionario con estadísticas de cada brazo por algoritmo (ganancia media y número de selecciones).
-    :param algorithms: Lista de instancias de algoritmos comparados.
+    Genera gráficos individuales para cada algoritmo mostrando el desempeño de los brazos.
+
+    :param arm_data: Lista de diccionarios con estadísticas de cada brazo por algoritmo.
+    :param algorithms: Lista de instancias de algoritmos evaluados.
     """
     num_algorithms = len(algorithms)
-    fig, axes = plt.subplots(1, num_algorithms, figsize=(num_algorithms * 5, 5), sharey=True)
-    if num_algorithms == 1:
-        axes = [axes]
-    
-    for i, algorithm in enumerate(algorithms):
-        arm_means = arm_stats[algorithm.name]['means']
-        arm_counts = arm_stats[algorithm.name]['counts']
-        num_arms = len(arm_means)
-        
-        bars = axes[i].bar(range(num_arms), arm_means, tick_label=[f"{j}\n({arm_counts[j]} selecciones)" for j in range(num_arms)])
-        
-        optimal_arm = np.argmax(arm_means)
-        bars[optimal_arm].set_color('r')
-        
-        axes[i].set_xlabel("Brazo")
-        axes[i].set_ylabel("Ganancia media")
-        axes[i].set_title(f"{algorithm.name}: Promedio de Ganancias por Brazo")
-        axes[i].grid(axis='y')
-    
-    plt.show()
+
+    for algo_idx, (stats, algorithm) in enumerate(zip(arm_data, algorithms)):
+        fig, ax = plt.subplots(figsize=(8, 6))  # Crear un nuevo gráfico para cada algoritmo
+
+        # Extraer información relevante de cada brazo
+        arm_indices = [entry["arm"] for entry in stats]
+        avg_rewards = [entry["average_reward"] for entry in stats]
+        selection_counts = [entry["times_selected"] for entry in stats]
+        is_optimal = [entry["optimal"] for entry in stats]
+
+        # Etiquetas del eje X con porcentaje de selección y marcando el óptimo
+        x_labels = [f"Brazo {idx} - {round((count/1000)*100, 2)}% - {'Óptimo' if opt else 'No'}" 
+                    for idx, count, opt in zip(arm_indices, selection_counts, is_optimal)]
+
+        # Asignación de colores: verde para el brazo óptimo, azul para los demás
+        bar_colors = ["green" if opt else "blue" for opt in is_optimal]
+
+        # Generar el gráfico de barras
+        ax.bar(x_labels, avg_rewards, color=bar_colors)
+
+        # Configuración de los ejes y el título
+        ax.set_xlabel("Frecuencia de Selección del Brazo")
+        ax.set_ylabel("Recompensa Media")
+        ax.set_title(f"Análisis de Selección de Brazos - {algorithm.__class__.__name__}")
+        ax.set_xticklabels(x_labels, rotation=45, ha="right", fontsize=10)
+
+        # Ajustar diseño y mostrar
+        plt.tight_layout()
+        plt.show()
+
+        # Imprimir los valores de recompensa promedio por brazo
+        for i, reward in enumerate(avg_rewards, 1):
+            print(f"Recompensa Media del Brazo {i}: {reward}")
 
 
 def plot_regret(steps: int, regret_accumulated: np.ndarray, algorithms: List[Algorithm], theoretical_bound=None):
