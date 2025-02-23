@@ -49,12 +49,13 @@ class ArmBinomial(Arm):
         return f"ArmBinomial(n={self.n}, p={self.p})"
 
     @classmethod
-    def generate_arms(cls, k: int, n: int, p_min: float = 0.1, p_max: float = 0.9):
+    def generate_arms(cls, k: int, n: int, seed: float, p_min: float = 0.1, p_max: float = 0.9):
         """
-        Genera k brazos con probabilidades únicas en el rango [p_min, p_max].
+        Genera k brazos con probabilidades únicas en el rango [p_min, p_max], asegurando reproducibilidad.
 
         :param k: Número de brazos a generar.
         :param n: Número de ensayos por brazo.
+        :param seed: Semilla para la generación de números aleatorios.
         :param p_min: Valor mínimo de la probabilidad de éxito.
         :param p_max: Valor máximo de la probabilidad de éxito.
         :return: Lista de brazos generados.
@@ -63,14 +64,16 @@ class ArmBinomial(Arm):
         assert n > 0, "El número de ensayos n debe ser un entero positivo."
         assert 0 <= p_min < p_max <= 1, "Los valores de p_min y p_max deben estar en el rango [0, 1] y p_min < p_max."
 
+        # Fijar la semilla para la reproducibilidad
+        np.random.seed(seed)
+
         # Generar k valores únicos de p con dos decimales
         p_values = set()
         while len(p_values) < k:
-            p = np.random.uniform(p_min, p_max)
-            p = round(p, 2)
+            p = round(np.random.uniform(p_min, p_max), 2)
             p_values.add(p)
 
         p_values = list(p_values)
-        arms = [ArmBinomial(n, p) for p in p_values]
+        arms = [cls(n, p) for p in p_values]  # Crear objetos de la clase ArmBinomial
 
         return arms
