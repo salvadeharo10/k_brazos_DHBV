@@ -88,6 +88,9 @@ def plot_optimal_selections(steps: int, optimal_selections: np.ndarray, algorith
     plt.show()
 
 
+import matplotlib.pyplot as plt
+import numpy as np
+
 def plot_arm_statistics(arm_data, algorithms):
     """
     Genera gráficos individuales para cada algoritmo mostrando el desempeño de los brazos.
@@ -120,10 +123,13 @@ def plot_arm_statistics(arm_data, algorithms):
         # Generar el gráfico de barras
         bars = ax.bar(x_labels, avg_rewards, color=color_palette, edgecolor="black", alpha=0.8)
 
+        # Obtener etiqueta mejorada del algoritmo
+        algorithm_label = get_algorithm_label(algorithm)
+
         # Configuración de los ejes y el título
         ax.set_xlabel("Frecuencia de Selección del Brazo", fontsize=12, fontweight='bold')
         ax.set_ylabel("Recompensa Media", fontsize=12, fontweight='bold')
-        ax.set_title(f"Análisis de Selección de Brazos - {algorithm.__class__.__name__}", fontsize=14, fontweight='bold')
+        ax.set_title(f"Análisis de Selección de Brazos - {algorithm_label}", fontsize=14, fontweight='bold')
         ax.set_xticklabels(x_labels, rotation=45, ha="right", fontsize=10)
         ax.grid(axis='y', linestyle='--', alpha=0.7)
         
@@ -135,8 +141,7 @@ def plot_arm_statistics(arm_data, algorithms):
         # Ajustar diseño y mostrar
         plt.tight_layout()
         plt.show()
-
-
+        
 
 def plot_regret(steps: int, regret_accumulated: np.ndarray, algorithms: List[Algorithm], theoretical_bound=None):
     """
