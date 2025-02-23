@@ -36,7 +36,7 @@ def get_algorithm_label(algo: Algorithm) -> str:
     elif isinstance(algo, UCB1):
         label += f" (c={algo.c})"
     elif isinstance(algo, UCB2):
-        label += f" (parametro={algo.parametro})"
+        label += f" (alpha={algo.alpha})"
     elif isinstance(algo, Softmax):
         label += f" (parametro={algo.parametro})"
     elif isinstance(algo, GradientBandit):
