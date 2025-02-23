@@ -58,11 +58,12 @@ class ArmNormal(Arm):
         return f"ArmNormal(mu={self.mu}, sigma={self.sigma})"
 
     @classmethod
-    def generate_arms(cls, k: int, mu_min: float = 1, mu_max: float = 10.0):
+    def generate_arms(cls, k: int, seed:float, mu_min: float = 1, mu_max: float = 10.0):
         """
         Genera k brazos con medias únicas en el rango [mu_min, mu_max].
 
         :param k: Número de brazos a generar.
+        :param seed: Semilla para la generación de números aleatorios.
         :param mu_min: Valor mínimo de la media.
         :param mu_max: Valor máximo de la media.
         :return: Lista de brazos generados.
@@ -72,6 +73,7 @@ class ArmNormal(Arm):
 
         # Generar k- valores únicos de mu con decimales
         mu_values = set()
+        np.random.seed(seed) # Fijar la semilla para la reproducibilidad
         while len(mu_values) < k:
             mu = np.random.uniform(mu_min, mu_max)
             mu = round(mu, 2)
