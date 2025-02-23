@@ -96,14 +96,14 @@ def plot_arm_statistics(arm_data, algorithms):
     :param algorithms: Lista de instancias de algoritmos evaluados.
     """
     num_algorithms = len(algorithms)
-
+    
     for algo_idx, (stats, algorithm) in enumerate(zip(arm_data, algorithms)):
         if not isinstance(stats, list):  # Verificar si stats es una lista de diccionarios
             print(f"Error: Se esperaba una lista de diccionarios, pero se recibió {type(stats)}")
             continue
         
-        fig, ax = plt.subplots(figsize=(8, 6))  # Crear un nuevo gráfico para cada algoritmo
-
+        fig, ax = plt.subplots(figsize=(10, 6))  # Crear un nuevo gráfico para cada algoritmo
+        
         # Extraer información relevante de cada brazo
         arm_indices = [entry["arm"] for entry in stats]
         avg_rewards = [entry["average_reward"] for entry in stats]
@@ -111,28 +111,35 @@ def plot_arm_statistics(arm_data, algorithms):
         is_optimal = [entry["is_optimal"] for entry in stats]
 
         # Etiquetas para el eje X con porcentaje de selección y marcando el óptimo
-        x_labels = [f"Brazo {idx} - {round((count/1000)*100, 2)}% - {'Óptimo' if opt else 'No'}" 
+        x_labels = [f"Brazo {idx}\n{round((count/1000)*100, 2)}% - {'Óptimo' if opt else 'No'}" 
                     for idx, count, opt in zip(arm_indices, selection_counts, is_optimal)]
 
-        # Asignación de colores: verde para el brazo óptimo, azul para los demás
-        bar_colors = ["green" if opt else "blue" for opt in is_optimal]
+        # Colores agradables: verde para el brazo óptimo, tonos de azul para los demás
+        color_palette = ["#2ECC71" if opt else "#3498DB" for opt in is_optimal]
 
         # Generar el gráfico de barras
-        ax.bar(x_labels, avg_rewards, color=bar_colors)
+        bars = ax.bar(x_labels, avg_rewards, color=color_palette, edgecolor="black", alpha=0.8)
 
         # Configuración de los ejes y el título
-        ax.set_xlabel("Frecuencia de Selección del Brazo")
-        ax.set_ylabel("Recompensa Media")
-        ax.set_title(f"Análisis de Selección de Brazos - {algorithm.__class__.__name__}")
+        ax.set_xlabel("Frecuencia de Selección del Brazo", fontsize=12, fontweight='bold')
+        ax.set_ylabel("Recompensa Media", fontsize=12, fontweight='bold')
+        ax.set_title(f"📊 Análisis de Selección de Brazos - {algorithm.__class__.__name__}", fontsize=14, fontweight='bold')
         ax.set_xticklabels(x_labels, rotation=45, ha="right", fontsize=10)
-
+        ax.grid(axis='y', linestyle='--', alpha=0.7)
+        
+        # Agregar leyenda
+        legend_labels = {"Óptimo": "#2ECC71", "No Óptimo": "#3498DB"}
+        legend_patches = [plt.Line2D([0], [0], color=color, lw=6, label=f"{label}") for label, color in legend_labels.items()]
+        ax.legend(handles=legend_patches, title="🟢 Legenda", fontsize=10, title_fontsize=11, loc="upper right")
+        
         # Ajustar diseño y mostrar
         plt.tight_layout()
         plt.show()
 
         # Imprimir los valores de recompensa promedio por brazo
+        print("\n📢 **Resumen de Recompensas Medias**")
         for i, reward in enumerate(avg_rewards, 1):
-            print(f"Recompensa Media del Brazo {i}: {reward}")
+            print(f"Brazo {i}: {reward:.2f}")
 
 
 
