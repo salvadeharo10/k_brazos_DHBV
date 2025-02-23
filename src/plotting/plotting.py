@@ -130,16 +130,11 @@ def plot_arm_statistics(arm_data, algorithms):
         # Agregar leyenda
         legend_labels = {"Óptimo": "#2ECC71", "No Óptimo": "#3498DB"}
         legend_patches = [plt.Line2D([0], [0], color=color, lw=6, label=f"{label}") for label, color in legend_labels.items()]
-        ax.legend(handles=legend_patches, title="🟢 Legenda", fontsize=10, title_fontsize=11, loc="upper right")
+        ax.legend(handles=legend_patches, fontsize=10, title_fontsize=11, loc="upper right")
         
         # Ajustar diseño y mostrar
         plt.tight_layout()
         plt.show()
-
-        # Imprimir los valores de recompensa promedio por brazo
-        print("\n📢 **Resumen de Recompensas Medias**")
-        for i, reward in enumerate(avg_rewards, 1):
-            print(f"Brazo {i}: {reward:.2f}")
 
 
 
