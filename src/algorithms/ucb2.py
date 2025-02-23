@@ -34,7 +34,8 @@ class UCB2(Algorithm):
         
         # Selecciona el brazo con el valor UCB2 más alto
         return np.argmax(ucb_values)
-
+            
+    
     def update(self, chosen_arm: int, reward: float):
         """
         Actualiza el valor promedio del brazo elegido y el número de veces que se ha seleccionado.
@@ -46,6 +47,7 @@ class UCB2(Algorithm):
         # Actualizamos el número de épocas (ka) para el brazo seleccionado
         self.epochs[chosen_arm] += 1
 
+    
     def reset(self):
         """
         Reinicia el estado del algoritmo UCB2.
