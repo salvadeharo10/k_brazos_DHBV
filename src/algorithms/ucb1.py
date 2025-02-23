@@ -2,13 +2,15 @@ import numpy as np
 from algorithms.algorithm import Algorithm
 
 class UCB1(Algorithm):
-    def __init__(self, k: int):
+    def __init__(self, k: int, c: float = 1):
         """
         Inicializa el algoritmo UCB1.
         
         :param k: Número de brazos.
+        :param c: Parámetro para ajustar exploración.
         """
         super().__init__(k)
+        self.c = c 
         self.total_counts = 0  # Contador total de selecciones
 
     def select_arm(self) -> int:
@@ -25,7 +27,7 @@ class UCB1(Algorithm):
                 return arm
         
         # Aplicamos la fórmula de UCB1
-        ucb_values = self.values + np.sqrt((2 * np.log(self.total_counts)) / self.counts)
+        ucb_values = self.values + self.c * np.sqrt((2 * np.log(self.total_counts)) / self.counts)
         
         return np.argmax(ucb_values)
 
