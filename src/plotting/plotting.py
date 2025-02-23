@@ -153,7 +153,7 @@ def plot_regret(steps: int, regret_accumulated: np.ndarray, algorithms: List[Alg
     """
     plt.figure(figsize=(10, 6))
     for i, algorithm in enumerate(algorithms):
-        plt.plot(range(steps), regret_accumulated[i], label=algorithm.name)
+        plt.plot(range(steps), regret_accumulated[i], label=get_algorithm_label(algorithm))
     
     if theoretical_bound is not None:
         plt.plot(range(steps), theoretical_bound, 'k--', label="Cota Teórica C * ln(T)")
