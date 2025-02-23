@@ -1,5 +1,6 @@
 import numpy as np
 from math import log, sqrt, ceil
+from algorithms.algorithm import Algorithm
 
 class UCB2(Algorithm):
     def __init__(self, k: int, alpha: float):
