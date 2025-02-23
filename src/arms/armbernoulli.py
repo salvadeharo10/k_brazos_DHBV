@@ -46,7 +46,7 @@ class ArmBernoulli(Arm):
         return f"ArmBernoulli(p={self.p})"
 
     @classmethod
-    def generate_arms(cls, k: int, seed:float p_min: float = 0.1, p_max: float = 0.9):
+    def generate_arms(cls, k: int, seed:float, p_min: float = 0.1, p_max: float = 0.9):
         """
         Genera k brazos con probabilidades únicas en el rango [p_min, p_max].
 
