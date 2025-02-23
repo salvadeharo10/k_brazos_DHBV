@@ -46,11 +46,12 @@ class ArmBernoulli(Arm):
         return f"ArmBernoulli(p={self.p})"
 
     @classmethod
-    def generate_arms(cls, k: int, p_min: float = 0.1, p_max: float = 0.9):
+    def generate_arms(cls, k: int, seed:float p_min: float = 0.1, p_max: float = 0.9):
         """
         Genera k brazos con probabilidades únicas en el rango [p_min, p_max].
 
         :param k: Número de brazos a generar.
+        :param seed: Semilla para la generación de números aleatorios.
         :param p_min: Valor mínimo de la probabilidad de éxito.
         :param p_max: Valor máximo de la probabilidad de éxito.
         :return: Lista de brazos generados.
@@ -60,6 +61,7 @@ class ArmBernoulli(Arm):
 
         # Generar k valores únicos de p con dos decimales
         p_values = set()
+        np.random.seed(seed) # Fijar la semilla para la reproducibilidad
         while len(p_values) < k:
             p = np.random.uniform(p_min, p_max)
             p = round(p, 2)
