@@ -123,7 +123,7 @@ def plot_arm_statistics(arm_data, algorithms):
         # Configuración de los ejes y el título
         ax.set_xlabel("Frecuencia de Selección del Brazo", fontsize=12, fontweight='bold')
         ax.set_ylabel("Recompensa Media", fontsize=12, fontweight='bold')
-        ax.set_title(f"📊 Análisis de Selección de Brazos - {algorithm.__class__.__name__}", fontsize=14, fontweight='bold')
+        ax.set_title(f"Análisis de Selección de Brazos - {algorithm.__class__.__name__}", fontsize=14, fontweight='bold')
         ax.set_xticklabels(x_labels, rotation=45, ha="right", fontsize=10)
         ax.grid(axis='y', linestyle='--', alpha=0.7)
         
