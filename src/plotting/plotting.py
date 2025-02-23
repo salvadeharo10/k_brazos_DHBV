@@ -92,21 +92,25 @@ def plot_arm_statistics(arm_data, algorithms):
     """
     Genera gráficos individuales para cada algoritmo mostrando el desempeño de los brazos.
 
-    :param arm_data: Lista de diccionarios con estadísticas de cada brazo por algoritmo.
+    :param arm_data: Lista de listas de diccionarios con estadísticas de cada brazo por algoritmo.
     :param algorithms: Lista de instancias de algoritmos evaluados.
     """
     num_algorithms = len(algorithms)
 
     for algo_idx, (stats, algorithm) in enumerate(zip(arm_data, algorithms)):
+        if not isinstance(stats, list):  # Verificar si stats es una lista de diccionarios
+            print(f"Error: Se esperaba una lista de diccionarios, pero se recibió {type(stats)}")
+            continue
+        
         fig, ax = plt.subplots(figsize=(8, 6))  # Crear un nuevo gráfico para cada algoritmo
 
         # Extraer información relevante de cada brazo
         arm_indices = [entry["arm"] for entry in stats]
         avg_rewards = [entry["average_reward"] for entry in stats]
-        selection_counts = [entry["times_selected"] for entry in stats]
-        is_optimal = [entry["optimal"] for entry in stats]
+        selection_counts = [entry["selection_count"] for entry in stats]
+        is_optimal = [entry["is_optimal"] for entry in stats]
 
-        # Etiquetas del eje X con porcentaje de selección y marcando el óptimo
+        # Etiquetas para el eje X con porcentaje de selección y marcando el óptimo
         x_labels = [f"Brazo {idx} - {round((count/1000)*100, 2)}% - {'Óptimo' if opt else 'No'}" 
                     for idx, count, opt in zip(arm_indices, selection_counts, is_optimal)]
 
@@ -129,6 +133,7 @@ def plot_arm_statistics(arm_data, algorithms):
         # Imprimir los valores de recompensa promedio por brazo
         for i, reward in enumerate(avg_rewards, 1):
             print(f"Recompensa Media del Brazo {i}: {reward}")
+
 
 
 def plot_regret(steps: int, regret_accumulated: np.ndarray, algorithms: List[Algorithm], theoretical_bound=None):
