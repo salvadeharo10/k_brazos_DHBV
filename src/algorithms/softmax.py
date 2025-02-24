@@ -12,7 +12,7 @@ class Softmax(Algorithm):
         """
         assert tau > 0, "El parámetro tau debe ser mayor que 0."
 
-        super().init(k)
+        super().__init__(k)  # Llamada al constructor de Algorithm
         self.tau = tau
 
     def select_arm(self) -> int:
