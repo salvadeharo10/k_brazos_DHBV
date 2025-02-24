@@ -8,7 +8,6 @@ class GradientBandit(Algorithm):
 
         :param k: Número de brazos.
         :param alpha: Tasa de aprendizaje para actualizar las preferencias.
-        :raises ValueError: Si alpha no es positivo.
         """
         assert alpha > 0, "El parámetro alpha debe ser mayor que 0."
 
@@ -24,7 +23,7 @@ class GradientBandit(Algorithm):
         :return: Índice del brazo seleccionado.
         """
         # Calculamos la distribución Softmax sobre las preferencias H_t(a)
-        exp_prefs = np.exp(self.preferences)
+        exp_prefs = np.exp(self.preferences - np.max(self.preferences))  # Evita problemas numéricos
         probabilities = exp_prefs / np.sum(exp_prefs)
 
         # Seleccionamos un brazo basado en la distribución de probabilidad
@@ -39,13 +38,13 @@ class GradientBandit(Algorithm):
         :param reward: Recompensa obtenida tras seleccionar el brazo.
         """
         # Calculamos la política actual π_t(a) sobre las preferencias
-        exp_prefs = np.exp(self.preferences)
+        exp_prefs = np.exp(self.preferences - np.max(self.preferences))  # Evita desbordamientos
         probabilities = exp_prefs / np.sum(exp_prefs)
 
         # Actualizamos la recompensa promedio
-        self.average_reward += (reward - self.average_reward) / np.sum(self.counts + 1)
+        self.average_reward += (reward - self.average_reward) / (np.sum(self.counts) + 1)
 
-        # Actualización de las preferencias
+        # Actualización de las preferencias con la regla de gradiente de preferencias
         for a in range(self.k):
             if a == chosen_arm:
                 self.preferences[a] += self.alpha * (reward - self.average_reward) * (1 - probabilities[a])
