@@ -23,7 +23,7 @@ class GradientBandit(Algorithm):
         :return: Índice del brazo seleccionado.
         """
         # Calculamos la distribución Softmax sobre las preferencias H_t(a)
-        exp_prefs = np.exp(self.preferences - np.max(self.preferences))  # Evita problemas numéricos
+        exp_prefs = np.exp(self.preferences)  # Evita problemas numéricos
         probabilities = exp_prefs / np.sum(exp_prefs)
 
         # Seleccionamos un brazo basado en la distribución de probabilidad
@@ -38,7 +38,7 @@ class GradientBandit(Algorithm):
         :param reward: Recompensa obtenida tras seleccionar el brazo.
         """
         # Calculamos la política actual π_t(a) sobre las preferencias
-        exp_prefs = np.exp(self.preferences - np.max(self.preferences))  # Evita desbordamientos
+        exp_prefs = np.exp(self.preferences)  # Evita desbordamientos
         probabilities = exp_prefs / np.sum(exp_prefs)
 
         # Actualizamos la recompensa promedio
