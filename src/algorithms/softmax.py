@@ -2,7 +2,7 @@ import numpy as np
 from algorithms.algorithm import Algorithm
 
 class Softmax(Algorithm):
-    def init(self, k: int, tau: float = 0.1):
+    def __init__(self, k: int, tau: float = 0.1):
         """
         Inicializa el algoritmo Softmax para el problema del bandido multibrazo.
 
