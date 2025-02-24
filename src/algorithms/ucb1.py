@@ -11,23 +11,15 @@ class UCB1(Algorithm):
         """
         super().__init__(k)
         self.c = c 
-        self.total_counts = 0  # Contador total de selecciones
 
-    def select_arm(self) -> int:
+    def select_arm(self, step) -> int:
         """
         Selecciona un brazo basado en la política UCB1.
         
         :return: Índice del brazo seleccionado.
         """
-        self.total_counts += 1  # Incrementar el conteo total de selecciones
-        
-        # Si hay brazos no seleccionados, seleccionamos uno de ellos primero
-        for arm in range(self.k):
-            if self.counts[arm] == 0:
-                return arm
-        
         # Aplicamos la fórmula de UCB1
-        ucb_values = self.values + self.c * np.sqrt((2 * np.log(self.total_counts)) / self.counts)
+        ucb_values = self.values + self.c * np.sqrt((2 * np.log(step)) / self.counts)
         
         return np.argmax(ucb_values)
 
