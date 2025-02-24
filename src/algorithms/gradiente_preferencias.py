@@ -11,7 +11,7 @@ class GradientBandit(Algorithm):
         """
         assert alpha > 0, "El parámetro alpha debe ser mayor que 0."
 
-        super().__init__(k)
+        super().__init__(k)  # Inicializa self.k y self.counts
         self.alpha = alpha
         self.preferences = np.zeros(k)  # H_t(a), preferencias iniciales en 0
         self.average_reward = 0  # R̄_t, recompensa promedio
@@ -22,8 +22,8 @@ class GradientBandit(Algorithm):
         
         :return: Índice del brazo seleccionado.
         """
-        # Calculamos la distribución Softmax sobre las preferencias H_t(a)
-        exp_prefs = np.exp(self.preferences)  # Evita problemas numéricos
+        # Aplicamos Softmax a las preferencias con normalización numérica
+        exp_prefs = np.exp(self.preferences - np.max(self.preferences))  
         probabilities = exp_prefs / np.sum(exp_prefs)
 
         # Seleccionamos un brazo basado en la distribución de probabilidad
@@ -37,14 +37,18 @@ class GradientBandit(Algorithm):
         :param chosen_arm: Índice del brazo seleccionado.
         :param reward: Recompensa obtenida tras seleccionar el brazo.
         """
+        # Incrementamos el contador del brazo seleccionado
+        self.counts[chosen_arm] += 1
+
+        # Actualizamos la recompensa promedio global
+        total_pulls = np.sum(self.counts)  # Número total de selecciones
+        self.average_reward += (reward - self.average_reward) / total_pulls
+
         # Calculamos la política actual π_t(a) sobre las preferencias
-        exp_prefs = np.exp(self.preferences)  # Evita desbordamientos
+        exp_prefs = np.exp(self.preferences - np.max(self.preferences))  
         probabilities = exp_prefs / np.sum(exp_prefs)
 
-        # Actualizamos la recompensa promedio
-        self.average_reward += (reward - self.average_reward) / (np.sum(self.counts) + 1)
-
-        # Actualización de las preferencias con la regla de gradiente de preferencias
+        # Aplicamos la regla de Gradiente de Preferencias
         for a in range(self.k):
             if a == chosen_arm:
                 self.preferences[a] += self.alpha * (reward - self.average_reward) * (1 - probabilities[a])
