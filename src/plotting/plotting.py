@@ -161,7 +161,7 @@ def plot_regret(steps: int, regret_accumulated: np.ndarray, algorithms: List[Alg
     :param algorithms: Lista de instancias de algoritmos comparados.
     :param theoretical_bound: (Opcional) Cota teórica del regret C * ln(T) para comparación.
     """
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(14, 7))
     for i, algorithm in enumerate(algorithms):
         plt.plot(range(steps), regret_accumulated[i], label=get_algorithm_label(algorithm))
     
@@ -169,8 +169,8 @@ def plot_regret(steps: int, regret_accumulated: np.ndarray, algorithms: List[Alg
         plt.plot(range(steps), theoretical_bound, 'k--', label="Cota Teórica C * ln(T)")
     
     plt.xlabel("Pasos de tiempo")
-    plt.ylabel("Regret Acumulado")
-    plt.title("Evolución del Regret Acumulado")
+    plt.ylabel("Regret Promedio")
+    plt.title("Evolución del Regret Promedio")
     plt.legend()
     plt.grid(True)
     plt.show()
