@@ -7,20 +7,20 @@
   - Belmonte Martínez, Jose María
  
 ## Descripción
-[Breve descripción del trabajo y sus objetivos]
+En este repositorio se recopila el trabajo que tiene como objetivo abordar el problema del bandido multibrazo mediante el empleo de diferentes familias de algoritmos, tales como `$\epsilon$-greedy`, `UCB` (1 y 2) y `Métodos de Ascenso del Gradiente` (Softmax y Gradiente de preferencias).
 
 ## Estructura
-[Explicación de la organización del repositorio]
-- `src/` → Código Python relacionado con los experimentos.
-- `docs/` → Documentación en PDF, referencias en `.bib`, etc.
+- `src/` → Código Python relacionado con los experimentos: Implementación de los algoritmos y sus políticas; Implementación de los brazos con distintas distribuciones de probabilidad; Otras funcionalidades, tales como plotear gráficas.
+- `docs/` → Documentación en PDF sobre el trabajo realizado.
 - `tests/` → Scripts para pruebas automáticas.
 - `data/` → Datos utilizados en los experimentos.
-- `notebook1.ipynb` → Introducción y contexto del problema.
-- `notebook2.ipynb` → Estudio de la familia **epsilon-greedy**.
-- `etc.ipynb` → Notebooks adicionales sobre distintos métodos.
+- `main.ipynb` → Notebook principal de presentación, que permite navegar entre los distintos notebooks con los experimentos.
+- `bandit_experiments_epsilongreedy.ipynb` → Experimentos para la familia de algoritmos $\epsilon$-greedy.
+- `bandit_experiments_ucb.ipynb` → Experimentos para la familia de algoritmos UCB, en particular UCB1 y UCB2.
+- `bandit_experiments_ascensoGradiente.ipynb` → Experimentos para la familia de algoritmos de Ascenso del Gradiente, en particular Softmax y Gradiente de Preferencias.
 
 ## Instalación y uso
-[Instrucciones si son necesarias]
+Se recomienda la ejecución de los notebooks en Google Colab. Para este fin, se aconseja abrir el notebook `main.ipynb`, donde se encontrarán enlaces directos para abrir los notebooks con los distintos experimentos en Colab.
 
 ## Tecnologías utilizadas
-[Lista de lenguajes, frameworks, etc.]
+Python, GitHub y Google Colab.
