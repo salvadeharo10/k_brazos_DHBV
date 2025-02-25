@@ -42,7 +42,8 @@ class GradientBandit(Algorithm):
 
         # Actualizamos la recompensa promedio global
         total_pulls = np.sum(self.counts)  # Número total de selecciones
-        self.average_reward += (reward - self.average_reward) / total_pulls
+        if total_pulls > 0:
+            self.average_reward += (reward - self.average_reward) / total_pulls
 
         # Calculamos la política actual π_t(a) sobre las preferencias
         exp_prefs = np.exp(self.preferences - np.max(self.preferences))  
@@ -54,3 +55,11 @@ class GradientBandit(Algorithm):
                 self.preferences[a] += self.alpha * (reward - self.average_reward) * (1 - probabilities[a])
             else:
                 self.preferences[a] -= self.alpha * (reward - self.average_reward) * probabilities[a]
+
+    def reset(self):
+        """
+        Reinicia el estado del algoritmo, poniendo a 0 las preferencias y la recompensa promedio.
+        """
+        self.preferences = np.zeros(self.k)  # Reiniciar preferencias H_t(a)
+        self.average_reward = 0  # Reiniciar recompensa promedio
+        self.counts = np.zeros(self.k, dtype=int)  # Reiniciar conteo de selecciones
