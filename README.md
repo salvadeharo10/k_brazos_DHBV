@@ -7,7 +7,7 @@
   - Belmonte Martínez, Jose María
  
 ## Descripción
-En este repositorio se recopila el trabajo que tiene como objetivo abordar el problema del bandido multibrazo mediante el empleo de diferentes familias de algoritmos, tales como `$\epsilon$-greedy`, `UCB` (1 y 2) y `Métodos de Ascenso del Gradiente` (Softmax y Gradiente de preferencias).
+En este repositorio se recopila el trabajo que tiene como objetivo abordar el problema del bandido multibrazo mediante el empleo de diferentes familias de algoritmos, tales como `Epsilon-greedy`, `UCB` (1 y 2) y `Métodos de Ascenso del Gradiente` (Softmax y Gradiente de preferencias).
 
 ## Estructura
 - `src/` → Código Python relacionado con los experimentos: Implementación de los algoritmos y sus políticas; Implementación de los brazos con distintas distribuciones de probabilidad; Otras funcionalidades, tales como plotear gráficas.
