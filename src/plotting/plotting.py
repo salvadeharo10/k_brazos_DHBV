@@ -168,9 +168,9 @@ def plot_regret(steps: int, regret_accumulated: np.ndarray, algorithms: List[Alg
     if theoretical_bound is not None:
         plt.plot(range(steps), theoretical_bound, 'k--', label="Cota Teórica C * ln(T)")
     
-    plt.xlabel("Pasos de tiempo")
-    plt.ylabel("Regret Promedio")
-    plt.title("Evolución del Regret Promedio")
+    plt.xlabel("Pasos de Tiempo")
+    plt.ylabel("Regret Acumulado Promedio")
+    plt.title("Evolución del Regret Acumulado Promedio")
     plt.legend()
     plt.grid(True)
     plt.show()
