@@ -7,13 +7,12 @@
   - Belmonte Martínez, Jose María
  
 ## Descripción
-En este repositorio se recopila el trabajo que tiene como objetivo abordar el problema del bandido multibrazo mediante el empleo de diferentes familias de algoritmos, tales como `Epsilon-greedy`, `UCB` (1 y 2) y `Métodos de Ascenso del Gradiente` (Softmax y Gradiente de preferencias).
+En este repositorio se recopilan una serie de notebooks que conforman el estudio realizado sobre el problema del bandido de \textit{k}-brazos, un modelo fundamental en el campo del aprendizaje por refuerzo. Se han implementado y comparado distintas familias de algoritmos para resolver este problema, evaluando su desempeño en entornos estacionarios mediante simulaciones.
+En particular, se ha realizado un análisis detallado de la familia de algoritmos $\varepsilon$-greedy, explorando sus variantes y su impacto en el equilibrio entre exploración y explotación. Asimismo, se han implementado y evaluado otros métodos, como los basados en Upper Confidence Bound (UCB) y técnicas de ascenso del gradiente. 
 
 ## Estructura
 - `src/` → Código Python relacionado con los experimentos: Implementación de los algoritmos y sus políticas; Implementación de los brazos con distintas distribuciones de probabilidad; Otras funcionalidades, tales como plotear gráficas.
 - `docs/` → Documentación en PDF sobre el trabajo realizado.
-- `tests/` → Scripts para pruebas automáticas.
-- `data/` → Datos utilizados en los experimentos.
 - `main.ipynb` → Notebook principal de presentación, que permite navegar entre los distintos notebooks con los experimentos.
 - `1_bandit_experiments_epsilongreedy.ipynb` → Experimentos para la familia de algoritmos $\epsilon$-greedy.
 - `2_bandit_experiments_ucb.ipynb` → Experimentos para la familia de algoritmos UCB, en particular UCB1 y UCB2.
@@ -23,5 +22,5 @@ En este repositorio se recopila el trabajo que tiene como objetivo abordar el pr
 ## Instalación y uso
 Se recomienda la ejecución de los notebooks en Google Colab. Para este fin, se aconseja abrir el notebook `main.ipynb`, donde se encontrarán enlaces directos para abrir los notebooks con los distintos experimentos en Colab.
 
-## Tecnologías utilizadas
+## Tecnologías utilizadas  y entorno de desarrollo
 Python, GitHub y Google Colab.
